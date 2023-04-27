@@ -58,20 +58,20 @@ function discoverCell(row, col) {
     //
     // TODO: Task 5 - Reveal cells when clicked.
     //
-     
+
     cells[row][col].discovered = true;
 
     //
     // TODO: Task 6 - Discover neighbor cells recursively, as long as there are no adjacent bombs to the current cell.
     //
-    
+
 
     for (let r = row; r < cells.length; r++) {
         for (let c = col; c < cells.length; c++) {
             cells[r][c].discovered = true;
             if (cells[r][c].isBomb) {
                 cells[r][c].discovered = false;
-                r = cells.length-1;
+                r = cells.length - 1;
                 break;
             }
         }
@@ -90,7 +90,7 @@ function discoverCell(row, col) {
 
     //
     // TODO: Task 8 - Implement defeat. If the player "discovers" a bomb (clicks on it without holding shift), set the variable defeat to true.
-    if(cells[row][col].isBomb){
+    if (cells[row][col].isBomb) {
         defeat = true;
     }
     //
@@ -110,8 +110,43 @@ function countAdjacentBombs(row, col) {
     // TODO: Task 4 - Adjacent bombs are bombs in cells touching our cell (also diagonally). Implement this function
     //                so that it returns the count of adjacent cells with bombs in them. 
     //
-    return 1;
+    let numOfBomb = 0;
+
+   
+    if(row > 0 && row < 9 && col > 0 && col < 9){
+        if (cells[row - 1][col - 1].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row - 1][col].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row - 1][col + 1].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row][col - 1].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row][col].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row][col + 1].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row + 1][col - 1].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row + 1][col].isBomb) {
+            numOfBomb ++;
+        }
+        if (cells[row + 1][col + 1].isBomb) {
+            numOfBomb ++;
+        }
+    }
+    
+
+    return numOfBomb;
 }
+
 
 function getBombsCount() {
     //
