@@ -5,7 +5,7 @@ const CHEAT_REVEAL_ALL = false;
 
 const ROWS_COUNT = 10;
 const COLS_COUNT = 10;
-const BOMBS_COUNT = 5;
+const BOMBS_COUNT = 10;
 var defeat = false;
 var victory = false;
 
@@ -40,11 +40,10 @@ for (var row = 0; row < ROWS_COUNT; row++) {
 //
 
 
-for(let i=1; i<=BOMBS_COUNT; i++){
-    let ranRow = Math.floor(Math.random()*10);
-    let ranCol = Math.floor(Math.random()*10);
+for (let i = 1; i <= BOMBS_COUNT; i++) {
+    let ranRow = Math.floor(Math.random() * 10);
+    let ranCol = Math.floor(Math.random() * 10);
     cells[ranRow][ranCol].isBomb = true;
-    console.log(ranCol,ranRow);
 }
 
 // Once the game has been initialized, we "render" it.
@@ -59,13 +58,41 @@ function discoverCell(row, col) {
     //
     // TODO: Task 5 - Reveal cells when clicked.
     //
-        cells[row][col].discovered = true;
+     
+    cells[row][col].discovered = true;
+
     //
     // TODO: Task 6 - Discover neighbor cells recursively, as long as there are no adjacent bombs to the current cell.
     //
+    
+
+    for (let r = row; r < cells.length; r++) {
+        for (let c = col; c < cells.length; c++) {
+            cells[r][c].discovered = true;
+            if (cells[r][c].isBomb) {
+                cells[r][c].discovered = false;
+                r = cells.length-1;
+                break;
+            }
+        }
+    }
+    for (let r = row; r >= 0; r--) {
+        for (let c = col; c >= 0; c--) {
+            cells[r][c].discovered = true;
+            if (cells[r][c].isBomb) {
+                cells[r][c].discovered = false;
+                r = 0;
+                break;
+            }
+        }
+    }
+
 
     //
     // TODO: Task 8 - Implement defeat. If the player "discovers" a bomb (clicks on it without holding shift), set the variable defeat to true.
+    if(cells[row][col].isBomb){
+        defeat = true;
+    }
     //
 }
 
@@ -144,7 +171,7 @@ function render() {
                     cellText = "💣";
                 } else {
                     var adjBombs = countAdjacentBombs(row, col);
-                    if (adjBombs > 0) { 
+                    if (adjBombs > 0) {
                         cellText = adjBombs.toString();
                         if (adjBombs == 1) {
                             textColor = "blue";
@@ -191,7 +218,7 @@ function render() {
 // This function gets called each time a cell is clicked. Arguments "row" and "col" will be set to the relevant
 // values. Argument "event" is used to check if the shift key was held during the click.
 function onCellClicked(row, col, event) {
-    if(event.shiftKey) {
+    if (event.shiftKey) {
         flagCell(row, col);
     } else {
         discoverCell(row, col);
