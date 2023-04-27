@@ -158,21 +158,37 @@ function getBombsCount() {
     //
     // TODO: Task 9 - Implement stats: the counters currently always display 0, calculate and return the relevant values.
     //
-    return 0;
+    return BOMBS_COUNT;
 }
 
 function getClearedCells() {
     //
     // TODO: Task 9 - Implement stats: the counters currently always display 0, calculate and return the relevant values.
+
+    let amountClearedCells = 0;
+
+    for(row = 0; row < cells.length; row ++){
+        for(col = 0; col < cells.length; col ++){
+            if(cells[row][col].discovered){
+                amountClearedCells ++;
+            }
+        }
+    }
     //
-    return 0;
+    return amountClearedCells ;
 }
 
 function getTotalCellsToClear() {
     //
     // TODO: Task 9 - Implement stats: the counters currently always display 0, calculate and return the relevant values.
     //
-    return 0;
+    let totalCells = 0;
+    cells.forEach(function(row){
+        row.forEach(function(col){
+            totalCells ++;
+        })
+    })
+    return totalCells;
 }
 
 function checkForVictory() {
@@ -180,6 +196,10 @@ function checkForVictory() {
     // TODO: Task 10 - Implement victory. If the player has revealed as many cells as they must (every cell that isn't a
     //                 bomb), set variable victory to true.
     //
+    if(getClearedCells() == getTotalCellsToClear() - BOMBS_COUNT){
+        console.log(getClearedCells)
+        victory = true;
+    }
     return 0;
 }
 
