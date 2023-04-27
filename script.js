@@ -28,7 +28,11 @@ for (var row = 0; row < ROWS_COUNT; row++) {
 //
 // TODO: Task 1 - add some bombs at fixed positions.
 //
-
+cells[0][1].isBomb = true;
+cells[2][4].isBomb = true;
+cells[6][3].isBomb = true;
+cells[8][0].isBomb = true;
+cells[4][8].isBomb = true;
 //
 // TODO: Task 2 - Comment out the code of task 1. Instead of adding bombs in fixed places, add 10 of them in random places.
 //                Add a BOMBS_COUNT constant so that you can easily change the amount of bombs placed. Put it next to the
